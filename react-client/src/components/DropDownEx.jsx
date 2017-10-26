@@ -12,7 +12,7 @@ class DropDownEx extends React.Component {
 
   handleChange(e, { value }) {
     console.log(value);
-    this.props.updateSelectedUser(value);
+    this.props.updateSelectedUser(value, this.props.fromOrTo);
   }
 
   render() {

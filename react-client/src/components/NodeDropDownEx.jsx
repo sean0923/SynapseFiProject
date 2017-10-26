@@ -16,14 +16,14 @@ class NodeDropDownEx extends React.Component {
   }
 
   render() {
-    console.log('here!!:', this.props.fromNodeDropDownOptions);
+    console.log('here!!:', this.props.nodeDropDownOptions);
     return (
       <div>
         <Dropdown
           onChange={this.handleChange}
           search
           selection
-          options={this.props.fromNodeDropDownOptions}
+          options={this.props.nodeDropDownOptions}
           placeholder='Choose an option'
         />
       </div>

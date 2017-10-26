@@ -17,7 +17,7 @@ class App extends React.Component {
     this.state = {
       allUsers: [],
       usersDropDownOption: [],
-      fromNodeDropDownOptions: [],
+      nodeDropDownOptions: [],
       selectedFromUser: {},
       selectedFromNode: {},
       selectedToUser: {},
@@ -72,7 +72,7 @@ class App extends React.Component {
       })
       .then((nodes) => {
         console.log(nodes);
-        let fromNodeDropDownOptions = nodes.map((node, idx) => {
+        let nodeDropDownOptions = nodes.map((node, idx) => {
           console.log('INFO!!', node.info.bank_name);
           if (node.type === 'ACH-US') {
             return ({ key: node._id, value: idx, text: `${node.info.bank_name} (${node.type})` });
@@ -81,7 +81,7 @@ class App extends React.Component {
           return ({ key: node._id, value: idx, text: `${node.info.nickname} (${node.type})`});
         });
         this.setState({
-          fromNodeDropDownOptions
+          nodeDropDownOptions
         });
       });
   }
@@ -118,16 +118,20 @@ class App extends React.Component {
     let selectedUserId = this.state.allUsers[idx]._id;
     axios.post('/api/user/getUser', { selectedUserId })
       .then((user) => {
-        this.setState({
-          selectedFromUser: user.data
-        }, () => {
-          this.getAllNodes();
-        });
+        if (fromOrTo === 'from') {
+          this.setState({ selectedFromUser: user.data }, () => {
+            this.getAllNodes();
+          });
+        } else {
+          this.setState({ selectedToUser: user.data }, () => {
+            this.getAllNodes();
+          });
+        }
       });
   }
 
   updateSelectedNode(idx, fromOrTo) {
-    let selectedNode_id = this.state.fromNodeDropDownOptions[idx].key;
+    let selectedNode_id = this.state.nodeDropDownOptions[idx].key;
     let selectedUser = this.state.selectedFromUser;
     let postData = { selectedNode_id, selectedUser };
     axios.post('/api/node/getOneNode', postData)
@@ -170,20 +174,20 @@ class App extends React.Component {
         </div>
 
 
-        {console.log('here!!!!!!!!!!!!!!!!!!!!!!!!!!')}
-        {console.log(this.state.selectedFromNode)}
-        {console.log(this.state.selectedFromNode)}
+        {console.log('fromUser', this.state.selectedFromUser)}
+        {console.log('toUser', this.state.selectedToUser)}
 
         <div className="mainBox">
           <h1>From:</h1>
           <DropDownEx
+            fromOrTo={'from'}
             usersDropDownOption={this.state.usersDropDownOption}
             updateSelectedUser={this.updateSelectedUser}
           />
 
           <NodeDropDownEx
             fromOrTo={'from'}
-            fromNodeDropDownOptions={this.state.fromNodeDropDownOptions}
+            nodeDropDownOptions={this.state.nodeDropDownOptions}
             updateSelectedNode={this.updateSelectedNode}
           />
         </div>
@@ -191,13 +195,14 @@ class App extends React.Component {
         <div className="mainBox">
           <h1>To:</h1>
           <DropDownEx
+            fromOrTo={'to'}
             usersDropDownOption={this.state.usersDropDownOption}
             updateSelectedUser={this.updateSelectedUser}
           />
 
           <NodeDropDownEx
-            fromOrTo={'from'}
-            fromNodeDropDownOptions={this.state.fromNodeDropDownOptions}
+            fromOrTo={'to'}
+            nodeDropDownOptions={this.state.nodeDropDownOptions}
             updateSelectedNode={this.updateSelectedNode}
           />
         </div>
