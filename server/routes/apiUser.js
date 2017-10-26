@@ -43,8 +43,9 @@ const Users = synapseFiBase.Users;
 
 
 router.post('/getUser', (req, res) => {
+  // console.log('this is req.body', req.body);
   const options = {
-    _id: req.body._id,
+    _id: req.body.selectedUserId,
     fingerprint: keys.FINGERPRINT,
     ip_address: Helpers.getUserIP(),
     full_dehydrate: 'yes', // optional

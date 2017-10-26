@@ -115,12 +115,10 @@ class App extends React.Component {
   }
 
   updateSelectedUser(idx) {
-    let selectedPartUser = this.state.allUsers[idx];
-    axios.post('/api/user/getUser', selectedPartUser)
+    let selectedUserId = this.state.allUsers[idx]._id;
+    axios.post('/api/user/getUser', { selectedUserId })
       .then((data) => {
-        // console.log(data.data);
         let selectedUser = data.data;
-        // return Users.data;
         this.setState({
           selectedUser
         }, () => {
@@ -132,7 +130,6 @@ class App extends React.Component {
   updateSelectedNode(idx) {
     let selectedNode_id = this.state.nodesDropDownOption[idx].key;
     let selectedUser = this.state.selectedUser;
-    // console.log('SELECTED USER:', selectedUser)
     let postData = { selectedNode_id, selectedUser };
     axios.post('/api/node/getOneNode', postData)
       .then((data) => {
