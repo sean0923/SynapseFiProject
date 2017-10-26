@@ -17,11 +17,12 @@ class App extends React.Component {
     this.state = {
       allUsers: [],
       usersDropDownOption: [],
-      nodeDropDownOptions: [],
       selectedFromUser: {},
       selectedFromNode: {},
+      nodeDropDownFromOptions: [],
       selectedToUser: {},
       selectedToNode: {},
+      nodeDropDownToOptions: [],
     };
     this.getUser = this.getUser.bind(this);
     this.getAllUsers = this.getAllUsers.bind(this);
@@ -64,8 +65,12 @@ class App extends React.Component {
       });
   }
 
-  getAllNodes() {
-    axios.post('/api/node/getAllNodes', this.state.selectedFromUser)
+  getAllNodes(fromOrTo) {
+    let selectedUser;
+    if (fromOrTo === 'from') selectedUser = this.state.selectedFromUser;
+    else selectedUser = this.state.selectedToUser;
+
+    axios.post('/api/node/getAllNodes', selectedUser)
       .then((data) => {
         // console.log(data.data);
         return data.data.nodes;
@@ -78,11 +83,13 @@ class App extends React.Component {
             return ({ key: node._id, value: idx, text: `${node.info.bank_name} (${node.type})` });
           }
           // return ({ key: idx, value: idx, text: node.type, name: node.info.nickname});
-          return ({ key: node._id, value: idx, text: `${node.info.nickname} (${node.type})`});
+          return ({ key: node._id, value: idx, text: `${node.info.nickname} (${node.type})` });
         });
-        this.setState({
-          nodeDropDownOptions
-        });
+        if (fromOrTo === 'from') {
+          this.setState({ nodeDropDownFromOptions: nodeDropDownOptions });
+        } else {
+          this.setState({ nodeDropDownToOptions: nodeDropDownOptions });
+        }
       });
   }
 
@@ -120,23 +127,27 @@ class App extends React.Component {
       .then((user) => {
         if (fromOrTo === 'from') {
           this.setState({ selectedFromUser: user.data }, () => {
-            this.getAllNodes();
+            this.getAllNodes(fromOrTo);
           });
         } else {
           this.setState({ selectedToUser: user.data }, () => {
-            this.getAllNodes();
+            this.getAllNodes(fromOrTo);
           });
         }
       });
   }
 
   updateSelectedNode(idx, fromOrTo) {
-    let selectedNode_id = this.state.nodeDropDownOptions[idx].key;
+    let selectedNode_id;
     let selectedUser;
+    // let selectedNode_id = this.state.nodeDropDownFromOptions[idx].key;
     if (fromOrTo === 'from') {
       selectedUser = this.state.selectedFromUser;
+      selectedNode_id = this.state.nodeDropDownFromOptions[idx].key;
     } else {
       selectedUser = this.state.selectedToUser;
+      selectedNode_id = this.state.nodeDropDownToOptions[idx].key;
+      console.log('selectedUser:', selectedUser.json);
     }
     let postData = { selectedNode_id, selectedUser };
     axios.post('/api/node/getOneNode', postData)
@@ -185,11 +196,15 @@ class App extends React.Component {
         </div>
 
 
-        {console.log('fromUser', this.state.selectedFromUser)}
+        {/* {console.log('fromUser', this.state.selectedFromUser)}
         {console.log('toUser', this.state.selectedToUser)}
         {console.log('-------------------')}
         {console.log('fromNode', this.state.selectedFromNode)}
-        {console.log('toNode', this.state.selectedToNode)}
+        {console.log('toNode', this.state.selectedToNode)} */}
+        {console.log('fromNodeDD', this.state.nodeDropDownFromOptions)}
+        {console.log('toNodeDD', this.state.nodeDropDownToOptions)}
+
+
 
         <div className="mainBox">
           <h1>From:</h1>
@@ -201,7 +216,7 @@ class App extends React.Component {
 
           <NodeDropDownEx
             fromOrTo={'from'}
-            nodeDropDownOptions={this.state.nodeDropDownOptions}
+            nodeDropDownOptions={this.state.nodeDropDownFromOptions}
             updateSelectedNode={this.updateSelectedNode}
           />
         </div>
@@ -216,7 +231,7 @@ class App extends React.Component {
 
           <NodeDropDownEx
             fromOrTo={'to'}
-            nodeDropDownOptions={this.state.nodeDropDownOptions}
+            nodeDropDownOptions={this.state.nodeDropDownToOptions}
             updateSelectedNode={this.updateSelectedNode}
           />
         </div>
