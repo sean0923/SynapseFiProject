@@ -52,6 +52,7 @@ router.post('/create_ACH_US_Node', (req, res) => {
 
 // get all nodes
 router.post('/getAllNodes', (req, res) => {
+  console.log('GET ALL NODES');
   const user = req.body;
   Nodes.get(user, null, (err, nodesResponse) => {
     console.log(nodesResponse);

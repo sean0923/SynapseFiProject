@@ -17,7 +17,7 @@ class App extends React.Component {
     this.state = {
       allUsers: [],
       usersDropDownOption: [],
-      nodesDropDownOption: [],
+      fromNodeDropDownOptions: [],
       selectedFromUser: {},
       selectedFromNode_id: undefined,
       selectedFromNode: {},
@@ -74,7 +74,7 @@ class App extends React.Component {
       })
       .then((nodes) => {
         console.log(nodes);
-        let nodesDropDownOption = nodes.map((node, idx) => {
+        let fromNodeDropDownOptions = nodes.map((node, idx) => {
           console.log('INFO!!', node.info.bank_name);
           if (node.type === 'ACH-US') {
             return ({ key: node._id, value: idx, text: `${node.info.bank_name} (${node.type})` });
@@ -83,7 +83,7 @@ class App extends React.Component {
           return ({ key: node._id, value: idx, text: `${node.info.nickname} (${node.type})`});
         });
         this.setState({
-          nodesDropDownOption
+          fromNodeDropDownOptions
         });
       });
   }
@@ -116,35 +116,35 @@ class App extends React.Component {
       });
   }
 
-  updateSelectedUser(idx) {
+  updateSelectedUser(idx, fromOrTo) {
     let selectedUserId = this.state.allUsers[idx]._id;
     axios.post('/api/user/getUser', { selectedUserId })
       .then((data) => {
-        let selectedUser = data.data;
+        let selectedFromUser = data.data;
         this.setState({
-          selectedUser
+          selectedFromUser
         }, () => {
           this.getAllNodes();
         });
       });
   }
 
-  updateSelectedNode(idx) {
-    let selectedNode_id = this.state.nodesDropDownOption[idx].key;
+  updateSelectedNode(idx, fromOrTo) {
+    let selectedNode_id = this.state.fromNodeDropDownOptions[idx].key;
     let selectedUser = this.state.selectedFromUser;
     let postData = { selectedNode_id, selectedUser };
     axios.post('/api/node/getOneNode', postData)
       .then((data) => {
         console.log('this is oneNode', data.data);
-        let selectedNode = data.data;
+        let selectedFromNode = data.data;
         this.setState({
-          selectedNode
+          selectedFromNode
         });
       });
   }
 
   createTransaction() {
-    let postData = { node: this.state.selectedNode, money: 10000}
+    let postData = { node: this.state.selectedFromNode, money: 10000}
     axios.post('/api/transaction/createTransaction', postData)
       .then((data) => {
         console.log('transaction data:', data);
@@ -152,7 +152,7 @@ class App extends React.Component {
   }
 
   getAllTransactions() {
-    axios.post('/api/transaction/getAllTransactions', this.state.selectedNode)
+    axios.post('/api/transaction/getAllTransactions', this.state.selectedFromNode)
       .then((data) => {
         console.log('all transaction data:', data);
       });
@@ -174,7 +174,7 @@ class App extends React.Component {
 
 
         {console.log('here!!!!!!!!!!!!!!!!!!!!!!!!!!')}
-        {console.log(this.state.selectedNode)}
+        {console.log(this.state.selectedFromNode)}
         {console.log(this.state.selectedFromNode)}
 
         <div className="mainBox">
@@ -185,7 +185,7 @@ class App extends React.Component {
           />
 
           <NodeDropDownEx
-            nodesDropDownOption={this.state.nodesDropDownOption}
+            fromNodeDropDownOptions={this.state.fromNodeDropDownOptions}
             updateSelectedNode={this.updateSelectedNode}
           />
         </div>
@@ -198,11 +198,10 @@ class App extends React.Component {
           />
 
           <NodeDropDownEx
-            nodesDropDownOption={this.state.nodesDropDownOption}
+            fromNodeDropDownOptions={this.state.fromNodeDropDownOptions}
             updateSelectedNode={this.updateSelectedNode}
-          />          
+          />
         </div>
-        {/* <ThemingLayout /> */}
       </div>
     );
   }
