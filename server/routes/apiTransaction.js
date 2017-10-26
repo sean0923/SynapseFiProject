@@ -16,12 +16,11 @@ const Users = synapseFiBase.Users;
 // Create a Transaction
 
 router.post('/createTransaction', (req, res) => {
-  const node = req.body.node;
-  console.log('is it ? ', node.json._id);
+  // const fromNode = req.body.fromNode;
   const createPayload = {
     to: {
-      type: node.json.type,
-      id: node.json._id,
+      type: req.body.toNode.json.type,
+      id: req.body.toNode.json._id,
     },
     amount: {
       amount: 1.1,
@@ -32,7 +31,7 @@ router.post('/createTransaction', (req, res) => {
     },
   };
 
-  Transactions.create(node, createPayload, (err, transactionResp) => {
+  Transactions.create(req.body.fromNode, createPayload, (err, transactionResp) => {
     // error or transaction object
     // transaction = transactionResp;
     if (err) {

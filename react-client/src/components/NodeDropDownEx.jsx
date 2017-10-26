@@ -16,7 +16,6 @@ class NodeDropDownEx extends React.Component {
   }
 
   render() {
-    console.log('here!!:', this.props.nodeDropDownOptions);
     return (
       <div>
         <Dropdown
@@ -30,7 +29,5 @@ class NodeDropDownEx extends React.Component {
     );
   }
 }
-
-
 
 export default NodeDropDownEx;

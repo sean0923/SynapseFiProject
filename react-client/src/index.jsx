@@ -73,7 +73,7 @@ class App extends React.Component {
       .then((nodes) => {
         console.log(nodes);
         let nodeDropDownOptions = nodes.map((node, idx) => {
-          console.log('INFO!!', node.info.bank_name);
+          // console.log('INFO!!', node.info.bank_name);
           if (node.type === 'ACH-US') {
             return ({ key: node._id, value: idx, text: `${node.info.bank_name} (${node.type})` });
           }
@@ -132,20 +132,31 @@ class App extends React.Component {
 
   updateSelectedNode(idx, fromOrTo) {
     let selectedNode_id = this.state.nodeDropDownOptions[idx].key;
-    let selectedUser = this.state.selectedFromUser;
+    let selectedUser;
+    if (fromOrTo === 'from') {
+      selectedUser = this.state.selectedFromUser;
+    } else {
+      selectedUser = this.state.selectedToUser;
+    }
     let postData = { selectedNode_id, selectedUser };
     axios.post('/api/node/getOneNode', postData)
-      .then((data) => {
-        console.log('this is oneNode', data.data);
-        let selectedFromNode = data.data;
-        this.setState({
-          selectedFromNode
-        });
+      .then((node) => {
+        if (fromOrTo === 'from') {
+          this.setState({ selectedFromNode: node.data });
+        } else {
+          console.log('at selected to node');
+          console.log('at selected to node', node.data);
+          this.setState({ selectedToNode: node.data });
+        }
       });
   }
 
   createTransaction() {
-    let postData = { node: this.state.selectedFromNode, money: 10000}
+    let postData = {
+      fromNode: this.state.selectedFromNode,
+      toNode: this.state.selectedToNode,
+      money: 10000
+    };
     axios.post('/api/transaction/createTransaction', postData)
       .then((data) => {
         console.log('transaction data:', data);
@@ -176,6 +187,9 @@ class App extends React.Component {
 
         {console.log('fromUser', this.state.selectedFromUser)}
         {console.log('toUser', this.state.selectedToUser)}
+        {console.log('-------------------')}
+        {console.log('fromNode', this.state.selectedFromNode)}
+        {console.log('toNode', this.state.selectedToNode)}
 
         <div className="mainBox">
           <h1>From:</h1>
