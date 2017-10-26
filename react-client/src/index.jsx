@@ -17,10 +17,13 @@ class App extends React.Component {
     this.state = {
       allUsers: [],
       usersDropDownOption: [],
-      selectedUser: {},
       nodesDropDownOption: [],
-      selectedNode_id: undefined,
-      selectedNode: {},
+      selectedFromUser: {},
+      selectedFromNode_id: undefined,
+      selectedFromNode: {},
+      selectedToUser: {},
+      selectedToNode_id: undefined,
+      selectedToNode: {},
     };
     this.getUser = this.getUser.bind(this);
     this.getAllUsers = this.getAllUsers.bind(this);
@@ -39,7 +42,7 @@ class App extends React.Component {
   }
 
   getUser() {
-    axios.post('/api/user/getUser', this.state.selectedUser)
+    axios.post('/api/user/getUser', this.state.selectedFromUser)
       .then((data) => {
         console.log(data.data);
         // return Users.data;
@@ -64,7 +67,7 @@ class App extends React.Component {
   }
 
   getAllNodes() {
-    axios.post('/api/node/getAllNodes', this.state.selectedUser)
+    axios.post('/api/node/getAllNodes', this.state.selectedFromUser)
       .then((data) => {
         // console.log(data.data);
         return data.data.nodes;
@@ -86,8 +89,7 @@ class App extends React.Component {
   }
 
   getOneNode() {
-    
-    axios.post('/api/node/getOneNode', this.state.selectedUser)
+    axios.post('/api/node/getOneNode', this.state.selectedFromUser)
       .then((data) => {
         // console.log(data.data);
         return data.data.nodes;
@@ -95,7 +97,7 @@ class App extends React.Component {
   }
 
   createNode() {
-    axios.post('/api/node/createNode', this.state.selectedUser)
+    axios.post('/api/node/createNode', this.state.selectedFromUser)
       .then((Users) => {
         console.log(Users.data);
         console.log(Users.data._id);
@@ -105,7 +107,7 @@ class App extends React.Component {
   }
 
   create_ACH_US_Node() {
-    axios.post('/api/node/create_ACH_US_Node', this.state.selectedUser)
+    axios.post('/api/node/create_ACH_US_Node', this.state.selectedFromUser)
       .then((Users) => {
         console.log(Users.data);
         console.log(Users.data._id);
@@ -129,13 +131,12 @@ class App extends React.Component {
 
   updateSelectedNode(idx) {
     let selectedNode_id = this.state.nodesDropDownOption[idx].key;
-    let selectedUser = this.state.selectedUser;
+    let selectedUser = this.state.selectedFromUser;
     let postData = { selectedNode_id, selectedUser };
     axios.post('/api/node/getOneNode', postData)
       .then((data) => {
         console.log('this is oneNode', data.data);
         let selectedNode = data.data;
-        // return Users.data;
         this.setState({
           selectedNode
         });
@@ -169,16 +170,12 @@ class App extends React.Component {
           <Button onClick={this.createTransaction}>Create Transaction</Button>
           <Button onClick={this.getAllTransactions}>get All Transactions</Button>
           <Button>Default</Button>
-          {console.log('selecteduser', this.state.selectedUser)}
-          {/* <div className="leftBox">
-
-          </div>
-
-          <div className="rightBox">
-            
-          </div> */}
-
         </div>
+
+
+        {console.log('here!!!!!!!!!!!!!!!!!!!!!!!!!!')}
+        {console.log(this.state.selectedNode)}
+        {console.log(this.state.selectedFromNode)}
 
         <div className="mainBox">
           <h1>From:</h1>
