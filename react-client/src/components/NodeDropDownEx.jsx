@@ -12,7 +12,7 @@ class NodeDropDownEx extends React.Component {
 
   handleChange(e, { value }) {
     console.log(value);
-    this.props.updateSelectedNode(value);
+    this.props.updateSelectedNode(value, this.props.fromOrTo);
   }
 
   render() {

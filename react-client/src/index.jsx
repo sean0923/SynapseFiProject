@@ -19,10 +19,8 @@ class App extends React.Component {
       usersDropDownOption: [],
       fromNodeDropDownOptions: [],
       selectedFromUser: {},
-      selectedFromNode_id: undefined,
       selectedFromNode: {},
       selectedToUser: {},
-      selectedToNode_id: undefined,
       selectedToNode: {},
     };
     this.getUser = this.getUser.bind(this);
@@ -119,10 +117,9 @@ class App extends React.Component {
   updateSelectedUser(idx, fromOrTo) {
     let selectedUserId = this.state.allUsers[idx]._id;
     axios.post('/api/user/getUser', { selectedUserId })
-      .then((data) => {
-        let selectedFromUser = data.data;
+      .then((user) => {
         this.setState({
-          selectedFromUser
+          selectedFromUser: user.data
         }, () => {
           this.getAllNodes();
         });
@@ -185,6 +182,7 @@ class App extends React.Component {
           />
 
           <NodeDropDownEx
+            fromOrTo={'from'}
             fromNodeDropDownOptions={this.state.fromNodeDropDownOptions}
             updateSelectedNode={this.updateSelectedNode}
           />
@@ -198,6 +196,7 @@ class App extends React.Component {
           />
 
           <NodeDropDownEx
+            fromOrTo={'from'}
             fromNodeDropDownOptions={this.state.fromNodeDropDownOptions}
             updateSelectedNode={this.updateSelectedNode}
           />
