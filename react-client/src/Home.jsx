@@ -11,7 +11,7 @@ import FormEx from './components/FormEx.jsx';
 import NodeForm from './components/NodeForm.jsx';
 import TableEx from './components/TableEx.jsx';
 
-import { Button, Menu, Loader } from 'semantic-ui-react';
+import { Button, Menu, Loader, Form, Segment, Icon } from 'semantic-ui-react';
 
 // import { Loader } from 'semantic-ui-react'
 
@@ -276,6 +276,58 @@ class App extends React.Component {
     return (
       <div className="main">
 
+        <div id="mainContainer">
+          <div className="pay">
+            <div className="to">
+              <h2> To: </h2>
+              <DropDownEx
+                fromOrTo={'to'}
+                usersDropDownOption={this.state.usersDropDownOption}
+                updateSelectedUser={this.updateSelectedUser}
+              />
+            </div>
+            <div className="node">
+              <h2>Node:</h2>
+              <NodeDropDownEx
+                fromOrTo={'to'}
+                nodeDropDownOptions={this.state.nodeDropDownToOptions}
+                updateSelectedNode={this.updateSelectedNode}
+              />
+            </div>
+            <div className="amount">
+              <Form.Input
+                fluid
+                icon="dollar"
+                iconPosition="left"
+                onChange={this.handleNameChange}
+                value={this.state.legal_names}
+                placeholder="Amount"
+              />
+            </div>
+            <div className="payBtn">
+              <Button onClick={this.handleSubmit} color="teal" fluid size="large">
+                Pay
+              </Button>
+            </div>
+          </div>
+          <div className="history">history</div>
+          <div className="profile">
+            <h2>Profile:</h2>
+            <Segment stacked>
+              <div className="profileSmallBox">
+                <Icon name="user outline" />
+                Full name
+              </div>
+              <div className="profileSmallBox">
+                <Icon name="credit card alternative" />
+                Node type
+              </div>
+            </Segment>
+          </div>
+
+          <div className="people">people</div>
+
+        </div>
       
 
         <div className="mainBox">
