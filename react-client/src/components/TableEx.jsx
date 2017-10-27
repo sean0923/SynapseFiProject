@@ -19,7 +19,7 @@ const TableEx = ({ transactionHistory }) => (
             <Table.Cell>{tran.user}</Table.Cell>
             <Table.Cell>{tran.nodeType}</Table.Cell>
             <Table.Cell>{tran.transactionId}</Table.Cell>
-            <Table.Cell>{tran.amount}</Table.Cell>
+            <Table.Cell style={{ textAlign: 'center' }}><b>{`$ ${tran.amount}`}</b></Table.Cell>
           </Table.Row>
         );
       })}

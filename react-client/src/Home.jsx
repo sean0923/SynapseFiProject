@@ -34,6 +34,7 @@ class App extends React.Component {
       nodeDropDownToOptions: [],
       justCreatedUser: {},
       transactionHistory: [],
+      amout: undefined,
     };
     this.getUser = this.getUser.bind(this);
     this.createUser = this.createUser.bind(this);
@@ -46,6 +47,7 @@ class App extends React.Component {
     this.updateSelectedNode = this.updateSelectedNode.bind(this);
     this.createTransaction = this.createTransaction.bind(this);
     this.getAllTransactions = this.getAllTransactions.bind(this);
+    this.handleAmountChange = this.handleAmountChange.bind(this);
   }
 
   componentDidMount() {
@@ -124,10 +126,19 @@ class App extends React.Component {
         let nodeDropDownOptions = nodes.map((node, idx) => {
           // console.log('INFO!!', node.info.bank_name);
           if (node.type === 'ACH-US') {
-            return ({ key: node._id, value: idx, text: `${node.info.bank_name} (${node.type})` });
+            return ({
+              key: node._id,
+              value: idx,
+              text: `${node.info.bank_name} (${node.type})`,
+              back_name: node.info.bank_name
+            });
           }
-          // return ({ key: idx, value: idx, text: node.type, name: node.info.nickname});
-          return ({ key: node._id, value: idx, text: `${node.info.nickname} (${node.type})` });
+          return ({
+            key: node._id,
+            value: idx,
+            text: `${node.info.nickname} (${node.type})`,
+            nickname: node.info.nickname
+          });
         });
         if (fromOrTo === 'from') {
           this.setState({ nodeDropDownFromOptions: nodeDropDownOptions }, () => {
@@ -196,7 +207,6 @@ class App extends React.Component {
     } else {
       selectedUser = this.state.selectedToUser;
       selectedNode_id = this.state.nodeDropDownToOptions[idx].key;
-      console.log('selectedUser:', selectedUser.json);
     }
     let postData = { selectedNode_id, selectedUser };
     axios.post('/api/node/getOneNode', postData)
@@ -204,8 +214,6 @@ class App extends React.Component {
         if (fromOrTo === 'from') {
           this.setState({ selectedFromNode: node.data });
         } else {
-          console.log('at selected to node');
-          console.log('at selected to node', node.data);
           this.setState({ selectedToNode: node.data });
         }
       });
@@ -215,11 +223,10 @@ class App extends React.Component {
     let postData = {
       fromNode: this.state.selectedFromNode,
       toNode: this.state.selectedToNode,
-      money: 10000
+      amount: this.state.amount,
     };
     axios.post('/api/transaction/createTransaction', postData)
       .then((data) => {
-        // console.log('transaction data:', data);
         let transactionData = data.data.json;
         let historyData = {
           user: this.state.selectedToUser.json.legal_names[0],
@@ -238,12 +245,13 @@ class App extends React.Component {
   getAllTransactions() {
     axios.post('/api/transaction/getAllTransactions', this.state.selectedFromNode)
       .then((data) => {
-        // console.log('what??');
-        // console.log('all transaction data:', data.data.trans);
-        // data.data.trans.forEach((tran) => {
-        //   console.log('tran', tran._id, tran.to.id, tran.to.nickname);
-        // });
       });
+  }
+
+  handleAmountChange(e) {
+    this.setState({
+      amount: e.target.value
+    });
   }
 
   render() {
@@ -251,9 +259,8 @@ class App extends React.Component {
     if (this.state.nodeDropDownFromOptions.length === 0) {
       profileBox = (
         <div className="profile">
-          <h2 style={{ display: 'inline-block', margin: 0, marginRight: 20 }}>Profile:</h2>
-           <Loader active size='mini' inline /> 
-          {/* <Loader active small inline /> */}
+          <h2 style={{ display: 'inline-block', margin: 0, marginRight: 20 }}>My Profile:</h2>
+          <Loader active size='mini' inline /> 
           <Segment stacked>
             <div className="profileSmallBox">
               <Icon name="user outline" />
@@ -261,29 +268,29 @@ class App extends React.Component {
             </div>
             <div className="profileSmallBox">
               <Icon name="credit card alternative" />
-              Node type
+              Node nickname
             </div>
           </Segment>
         </div>
       );
     } else {
       let userName = this.props.justCreatedUser.json.legal_names;
-      let accountName = this.state.nodeDropDownFromOptions[0].text
+      let accountNickname = this.state.nodeDropDownFromOptions[0].nickname;
       profileBox = (
         <div className="profile">
-          <h2>Profile:</h2>
+          <h2>My Profile:</h2>
           <Segment stacked>
             <div className="profileSmallBox">
               <Icon name="user outline" />
-              Full name
+              {userName}
             </div>
             <div className="profileSmallBox">
               <Icon name="credit card alternative" />
-              Node type
+              {accountNickname}
             </div>
           </Segment>
         </div>
-      );      
+      );
     }
     return (
       <div className="main">
@@ -311,13 +318,13 @@ class App extends React.Component {
                 fluid
                 icon="dollar"
                 iconPosition="left"
-                onChange={this.handleNameChange}
-                value={this.state.legal_names}
+                onChange={this.handleAmountChange}
+                value={this.state.amount}
                 placeholder="Amount"
               />
             </div>
             <div className="payBtn">
-              <Button onClick={this.handleSubmit} color="teal" fluid size="large">
+              <Button onClick={this.createTransaction} color="teal" fluid size="large">
                 Pay
               </Button>
             </div>
@@ -332,7 +339,7 @@ class App extends React.Component {
           {profileBox}
 
           <div className="people">
-            <h2>People:</h2>
+            <h2>Users:</h2>
             {this.state.usersDropDownOption.map((user, idx) => {
               return (
                 <div key={idx} className="profileSmallBox">
@@ -342,46 +349,6 @@ class App extends React.Component {
               );
             })}
           </div>
-        </div>
-
-        <div className="mainBox">
-          <Button onClick={this.getAllUsers}>Get All Users</Button>
-          <Button onClick={this.getUser}>Get One Users</Button>
-          <Button onClick={this.createNode}>Create Node</Button>
-          <Button onClick={this.create_ACH_US_Node}>Create ACH-US Node</Button>
-          <Button onClick={this.getAllNodes}>Get All Nodes</Button>
-          <Button onClick={this.createTransaction}>Create Transaction</Button>
-          <Button onClick={this.getAllTransactions}>get All Transactions</Button>
-          <Button>Default</Button>
-        </div>
-
-        <div className="mainBox">
-          {profileBox}
-        </div>
-        <div className="mainBox">
-          <h1>Transfer Money To:</h1>
-          <DropDownEx
-            fromOrTo={'to'}
-            usersDropDownOption={this.state.usersDropDownOption}
-            updateSelectedUser={this.updateSelectedUser}
-          />
-
-          <NodeDropDownEx
-            fromOrTo={'to'}
-            nodeDropDownOptions={this.state.nodeDropDownToOptions}
-            updateSelectedNode={this.updateSelectedNode}
-          />
-        </div>
-
-
-
-        { console.log('fromUser', this.state.selectedFromUser) }
-
-        <div className="mainBox">
-          <h1>My Transaction History</h1>
-        </div>
-        <div className="tableBox">
-          <TableEx transactionHistory={this.state.transactionHistory} />
         </div>
       </div>
     );

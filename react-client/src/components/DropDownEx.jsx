@@ -11,7 +11,6 @@ class DropDownEx extends React.Component {
   }
 
   handleChange(e, { value }) {
-    console.log(value);
     this.props.updateSelectedUser(value, this.props.fromOrTo);
   }
 
@@ -23,10 +22,10 @@ class DropDownEx extends React.Component {
           search
           selection
           options={this.props.usersDropDownOption}
-          placeholder='Choose an option'
+          placeholder="Choose a user to pay"
         />
       </div>
-    )
+    );
   }
 }
 

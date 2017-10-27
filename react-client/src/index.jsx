@@ -19,7 +19,6 @@ class App extends React.Component {
 
   createUser(userData) {
     axios.post('/api/user/createUser', userData).then((user) => {
-      console.log(user.data);
       this.setState(
         {
           justCreatedUser: user.data,
@@ -37,7 +36,6 @@ class App extends React.Component {
       nickname,
     };
     axios.post('/api/node/createNode', postData).then((node) => {
-      console.log(node.data);
     });
   }
 
@@ -47,14 +45,14 @@ class App extends React.Component {
         <div>
           
           <div id="header"> <h1>Easy Pay with SynapseFi</h1> </div>
-          <Home/>
-          {/* <Switch>
+           {/* <Home/>  */}
+          <Switch>
             <Route exact path={'/'} render={() => <LoginForm createUser={this.createUser} />} />
             <Route
               path={'/home'}
               render={() => <Home justCreatedUser={this.state.justCreatedUser} />}
             />
-          </Switch> */}
+          </Switch>  
         </div>
       </Router>
     );

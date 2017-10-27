@@ -11,7 +11,6 @@ class NodeDropDownEx extends React.Component {
   }
 
   handleChange(e, { value }) {
-    console.log(value);
     this.props.updateSelectedNode(value, this.props.fromOrTo);
   }
 
@@ -23,7 +22,7 @@ class NodeDropDownEx extends React.Component {
           search
           selection
           options={this.props.nodeDropDownOptions}
-          placeholder='Choose an option'
+          placeholder="Choose an available node"
         />
       </div>
     );

@@ -39,7 +39,6 @@ router.post('/createUser', (req, res) => {
 });
 
 router.post('/getUser', (req, res) => {
-  // console.log('this is req.body', req.body);
   const options = {
     _id: req.body.selectedUserId,
     fingerprint: keys.FINGERPRINT,
@@ -50,14 +49,11 @@ router.post('/getUser', (req, res) => {
   Users.get(client, options, (errResp, userResponse) => {
     // error or user object
     const user = userResponse;
-    // console.log(user);
     res.send(user);
   });
 });
 
 router.get('/getAllUsers', (req, res) => {
-  console.log('GET');
-
   // Get All Users
   const options = {
     ip_address: Helpers.getUserIP(),
@@ -67,11 +63,6 @@ router.get('/getAllUsers', (req, res) => {
   };
 
   Users.get(client, options, (err, usersResponse) => {
-    // console.log(users.users);
-    // usersResponse.users.forEach((user) => {
-    //   console.log(user.legal_names, user._id, user.refresh_token);
-    // });
-    // res.send('yeah');
     res.send(usersResponse.users);
   });
 });

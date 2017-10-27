@@ -44,7 +44,6 @@ class LoginForm extends Component {
       phone_numbers: this.state.phone_numbers,
       nickname: this.state.nickname,
     };
-    console.log('is it ????');
     this.props.createUser(userData);
   }
 
@@ -58,7 +57,7 @@ class LoginForm extends Component {
         height: 100%;
       }
     `}</style>
-        <Grid textAlign="center" style={{ height: '100%' }} verticalAlign="middle">
+        <Grid textAlign="center" style={{ height: '75%' }} verticalAlign="middle">
           <Grid.Column style={{ maxWidth: 450 }}>
             <Header as="h2" color="teal" textAlign="center">
               Create SYNAPSE-US Account
