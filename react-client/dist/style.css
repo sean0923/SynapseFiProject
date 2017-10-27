@@ -15,7 +15,8 @@ html body {
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  grid-auto-rows: minmax(100px, auto);
+  /* grid-auto-rows: minmax(100px, auto); */
+  grid-auto-rows: auto;
   grid-gap: 20px;
   grid-column-gap: 20px;
   grid-template-areas: 
@@ -31,12 +32,18 @@ html body {
 } 
 
 .pay { grid-area: pay }
-.history { grid-area: history }
+.history {
+  grid-area: history;
+  padding: 10px;
+}
 .profile {
   grid-area: profile;
   padding: 10px;
 }
-.people { grid-area: people }
+.people {
+  grid-area: people;
+  padding: 10px;
+}
 
 .pay {
   display: grid;

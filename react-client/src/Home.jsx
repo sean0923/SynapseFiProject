@@ -247,29 +247,41 @@ class App extends React.Component {
   }
 
   render() {
-    let userInfoDiv;
+    let profileBox;
     if (this.state.nodeDropDownFromOptions.length === 0) {
-      userInfoDiv = (
-        <div>
-          <h1>Waiting ~~~</h1>
-          <Loader active inline />
+      profileBox = (
+        <div className="profile">
+          <h2 style={{ display: 'inline-block', margin: 0, marginRight: 20 }}>Profile:</h2>
+           <Loader active size='mini' inline /> 
+          {/* <Loader active small inline /> */}
+          <Segment stacked>
+            <div className="profileSmallBox">
+              <Icon name="user outline" />
+              Full name
+            </div>
+            <div className="profileSmallBox">
+              <Icon name="credit card alternative" />
+              Node type
+            </div>
+          </Segment>
         </div>
       );
     } else {
       let userName = this.props.justCreatedUser.json.legal_names;
       let accountName = this.state.nodeDropDownFromOptions[0].text
-      userInfoDiv = (
-        <div>
-          <div>
-            <h2> {userName} </h2> 
-            {/* {console.log('not working', this.props.justCreatedUser.json.legal_names)}   */}
-          </div>
-
-          <div>
-            <h2>My Node: {accountName}</h2>
-            {/* <h2>My SYNAPSE-US Node: { this.state.nodeDropDownFromOptions[0] }</h2>  */}
-            {/* { console.log('what about', this.state.nodeDropDownFromOptions[0]) } */}
-          </div>
+      profileBox = (
+        <div className="profile">
+          <h2>Profile:</h2>
+          <Segment stacked>
+            <div className="profileSmallBox">
+              <Icon name="user outline" />
+              Full name
+            </div>
+            <div className="profileSmallBox">
+              <Icon name="credit card alternative" />
+              Node type
+            </div>
+          </Segment>
         </div>
       );      
     }
@@ -310,25 +322,27 @@ class App extends React.Component {
               </Button>
             </div>
           </div>
-          <div className="history">history</div>
-          <div className="profile">
-            <h2>Profile:</h2>
-            <Segment stacked>
-              <div className="profileSmallBox">
-                <Icon name="user outline" />
-                Full name
-              </div>
-              <div className="profileSmallBox">
-                <Icon name="credit card alternative" />
-                Node type
-              </div>
-            </Segment>
+          <div className="history">
+            <h2>History: </h2>
+            <div style={{ margin: 0 }} className="tableBox">
+              <TableEx transactionHistory={this.state.transactionHistory} />
+            </div>
           </div>
 
-          <div className="people">people</div>
+          {profileBox}
 
+          <div className="people">
+            <h2>People:</h2>
+            {this.state.usersDropDownOption.map((user, idx) => {
+              return (
+                <div key={idx} className="profileSmallBox">
+                  <Icon name="user" />
+                  {user.text}
+                </div>
+              );
+            })}
+          </div>
         </div>
-      
 
         <div className="mainBox">
           <Button onClick={this.getAllUsers}>Get All Users</Button>
@@ -342,7 +356,7 @@ class App extends React.Component {
         </div>
 
         <div className="mainBox">
-          {userInfoDiv}
+          {profileBox}
         </div>
         <div className="mainBox">
           <h1>Transfer Money To:</h1>
