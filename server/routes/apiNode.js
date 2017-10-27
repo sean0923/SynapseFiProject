@@ -17,13 +17,13 @@ router.post('/createNode', (req, res) => {
   const synapseNodePayload = {
     type: 'SYNAPSE-US',
     info: {
-      nickname: 'My Synapse Wallet',
+      nickname: req.body.nickname,
     },
     extra: {
       supp_id: '123sa',
     },
   };
-  const user = req.body;
+  const user = req.body.user;
   Nodes.create(user, synapseNodePayload, (err, nodeResponse) => {
     res.send(nodeResponse);
   });

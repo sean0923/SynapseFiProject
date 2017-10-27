@@ -8,39 +8,35 @@ const Helpers = synapseFiBase.Helpers;
 const client = synapseFiBase.client;
 const Users = synapseFiBase.Users;
 
-// // Create a User
-// router.get('/createUser', (req, res) => {
-//   const createPayload = {
-//     logins: [
-//       {
-//         email: 'javascriptTest@synapsepay.com',
-//         password: 'test1234',
-//         read_only: false
-//       }
-//     ],
-//     phone_numbers: [
-//       '901.111.1111'
-//     ],
-//     legal_names: [
-//       'personB'
-//     ],
-//     extra: {
-//       note: 'Interesting user',
-//       supp_id: '122eddfgbeafrfvbbb',
-//       is_business: false
-//     }
-//   };
+// Create a User
+router.post('/createUser', (req, res) => {
+  const createPayload = {
+    logins: [
+      {
+        email: req.body.email,
+        password: req.body.password,
+        read_only: false,
+      },
+    ],
+    phone_numbers: [req.body.phone_numbers],
+    legal_names: [req.body.legal_names],
+    extra: {
+      note: 'Personal User',
+    },
+  };
 
-//   Users.get(client, options, (err, usersResponse) => {
-//     // console.log(users.users);
-//     usersResponse.users.forEach((user) => {
-//       console.log(user.legal_names, user._id, user.refresh_token);
-//     });
-//     // res.send('yeah');
-//     res.send(usersResponse.users);
-//   });
-// });
-
+  Users.create(
+    client,
+    keys.FINGERPRINT,
+    Helpers.getUserIP(),
+    createPayload,
+    (err, userResponse) => {
+      // error or user object
+      // user = userResponse;
+      res.send(userResponse);
+    }
+  );
+});
 
 router.post('/getUser', (req, res) => {
   // console.log('this is req.body', req.body);
@@ -53,7 +49,7 @@ router.post('/getUser', (req, res) => {
 
   Users.get(client, options, (errResp, userResponse) => {
     // error or user object
-    let user = userResponse;
+    const user = userResponse;
     // console.log(user);
     res.send(user);
   });
