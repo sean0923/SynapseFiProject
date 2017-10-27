@@ -45,13 +45,16 @@ class App extends React.Component {
     return (
       <Router>
         <div>
-          <Switch>
+          
+          <div id="header"> <h1>Easy Pay with SynapseFi</h1> </div>
+          <Home/>
+          {/* <Switch>
             <Route exact path={'/'} render={() => <LoginForm createUser={this.createUser} />} />
             <Route
               path={'/home'}
               render={() => <Home justCreatedUser={this.state.justCreatedUser} />}
             />
-          </Switch>
+          </Switch> */}
         </div>
       </Router>
     );
