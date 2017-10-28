@@ -40,7 +40,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.getAllUsers();
-  };
+  }
 
   componentWillReceiveProps(nextProps) {
     let selectedUserId = nextProps.justCreatedUser.json._id
