@@ -20,7 +20,7 @@ const ProfileBox = (props) => {
       </div>
     );
   }
-  console.log(props.nodeDropDownFromOptions.length);
+  
   let userName = props.justCreatedUser.json.legal_names;
   let accountNickname = props.nodeDropDownFromOptions[0].nickname;
   return (
