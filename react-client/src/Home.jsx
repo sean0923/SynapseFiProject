@@ -5,7 +5,7 @@ import { Button, Loader, Form, Segment, Icon } from 'semantic-ui-react';
 import UserDropDown from './components/UserDropDown.jsx';
 import NodeDropDown from './components/NodeDropDown.jsx';
 import TransHistoryTable from './components/TransHistoryTable.jsx';
-import People from './components/People.jsx';
+import PeopleBox from './components/PeopleBox.jsx';
 import ProfileBox from './components/ProfileBox.jsx';
 
 
@@ -239,43 +239,6 @@ class App extends React.Component {
   }
 
   render() {
-    let profileBox;
-    if (this.state.nodeDropDownFromOptions.length === 0) {
-      profileBox = (
-        <div className="profile">
-          <h2 style={{ display: 'inline-block', margin: 0, marginRight: 20 }}>My Profile:</h2>
-          <Loader active size='mini' inline /> 
-          <Segment stacked>
-            <div className="profileSmallBox">
-              <Icon name="user outline" />
-              Full name
-            </div>
-            <div className="profileSmallBox">
-              <Icon name="credit card alternative" />
-              Node nickname
-            </div>
-          </Segment>
-        </div>
-      );
-    } else {
-      let userName = this.props.justCreatedUser.json.legal_names;
-      let accountNickname = this.state.nodeDropDownFromOptions[0].nickname;
-      profileBox = (
-        <div className="profile">
-          <h2>My Profile:</h2>
-          <Segment stacked>
-            <div className="profileSmallBox">
-              <Icon name="user outline" />
-              {userName}
-            </div>
-            <div className="profileSmallBox">
-              <Icon name="credit card alternative" />
-              {accountNickname}
-            </div>
-          </Segment>
-        </div>
-      );
-    }
     return (
       <div className="main">
 
@@ -324,13 +287,12 @@ class App extends React.Component {
             </div>
           </div>
 
-          {/* {profileBox} */}
           <ProfileBox
             nodeDropDownFromOptions={this.state.nodeDropDownFromOptions}
-            justCreatedUser={this.props.justCreatedUse}
+            justCreatedUser={this.props.justCreatedUser}
           />
 
-          <People usersDropDownOption={this.state.usersDropDownOption} />
+          <PeopleBox usersDropDownOption={this.state.usersDropDownOption} />
         </div>
       </div>
     );
@@ -338,6 +300,3 @@ class App extends React.Component {
 }
 
 export default App;
-
-// ReactDOM.render(<App />, document.getElementById('app'));
-

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Icon } from 'semantic-ui-react';
 
-const People = ({ usersDropDownOption }) => {
+const PeopleBox = ({ usersDropDownOption }) => {
   return (
     <div className="people">
       <h2>Users:</h2>
@@ -17,4 +17,4 @@ const People = ({ usersDropDownOption }) => {
   );
 };
 
-export default People;
+export default PeopleBox;
