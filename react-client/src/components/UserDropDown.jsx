@@ -29,9 +29,4 @@ class UserDropDown extends React.Component {
   }
 }
 
-
-// const UserDropDown = ({ usersDropDownOption }) => (
-//   <Dropdown search selection options={usersDropDownOption} placeholder='Choose an option' />
-// );
-
 export default UserDropDown;

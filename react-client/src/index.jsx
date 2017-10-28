@@ -25,8 +25,7 @@ class App extends React.Component {
         },
         () => {
           this.createNode(userData.nickname);
-        },
-      );
+        });
     });
   }
 
@@ -45,38 +44,18 @@ class App extends React.Component {
         <div>
           
           <div id="header"> <h1>Easy Pay with SynapseFi</h1> </div>
-           {/* <Home/>  */}
+          {/* <Home/>  */}
           <Switch>
             <Route exact path={'/'} render={() => <LoginForm createUser={this.createUser} />} />
             <Route
               path={'/home'}
               render={() => <Home justCreatedUser={this.state.justCreatedUser} />}
             />
-          </Switch>  
+          </Switch>
         </div>
       </Router>
     );
   }
 }
-
-// const OldSchoolMenuLink = ({ label, to, activeOnlyWhenExact }) => (
-//   <Route path={to} exact={activeOnlyWhenExact} children={({ match }) => (
-//     <div className={match ? 'active' : ''}>
-//       {match ? '> ' : ''}<Link to={to}>{label}</Link>
-//     </div>
-//   )}/>
-// )
-
-// const Home = () => (
-//   <div>
-//     <h2>Home</h2>
-//   </div>
-// )
-
-const About = () => (
-  <div>
-    <h2>About</h2>
-  </div>
-);
 
 ReactDOM.render(<App />, document.getElementById('app'));
