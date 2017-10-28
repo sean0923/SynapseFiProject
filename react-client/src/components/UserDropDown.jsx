@@ -1,7 +1,7 @@
 import React from 'react'
 import { Dropdown } from 'semantic-ui-react'
 
-class DropDownEx extends React.Component {
+class UserDropDown extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -30,8 +30,8 @@ class DropDownEx extends React.Component {
 }
 
 
-// const DropDownEx = ({ usersDropDownOption }) => (
+// const UserDropDown = ({ usersDropDownOption }) => (
 //   <Dropdown search selection options={usersDropDownOption} placeholder='Choose an option' />
 // );
 
-export default DropDownEx;
+export default UserDropDown;

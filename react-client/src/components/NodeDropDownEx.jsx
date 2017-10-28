@@ -1,7 +1,7 @@
 import React from 'react'
 import { Dropdown } from 'semantic-ui-react'
 
-class NodeDropDownEx extends React.Component {
+class NodeDropDown extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -29,4 +29,4 @@ class NodeDropDownEx extends React.Component {
   }
 }
 
-export default NodeDropDownEx;
+export default NodeDropDown;

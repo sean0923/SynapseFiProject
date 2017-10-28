@@ -2,8 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import { Button, Loader, Form, Segment, Icon } from 'semantic-ui-react';
 
-import DropDownEx from './components/DropDownEx.jsx';
-import NodeDropDownEx from './components/NodeDropDownEx.jsx';
+import UserDropDown from './components/UserDropDown.jsx';
+import NodeDropDown from './components/NodeDropDown.jsx';
 import TableEx from './components/TableEx.jsx';
 
 
@@ -287,7 +287,7 @@ class App extends React.Component {
           <div className="pay">
             <div className="to">
               <h2> To: </h2>
-              <DropDownEx
+              <UserDropDown
                 fromOrTo={'to'}
                 usersDropDownOption={this.state.usersDropDownOption}
                 updateSelectedUser={this.updateSelectedUser}
@@ -295,7 +295,7 @@ class App extends React.Component {
             </div>
             <div className="node">
               <h2>Node:</h2>
-              <NodeDropDownEx
+              <NodeDropDown
                 fromOrTo={'to'}
                 nodeDropDownOptions={this.state.nodeDropDownToOptions}
                 updateSelectedNode={this.updateSelectedNode}
