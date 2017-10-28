@@ -8,9 +8,6 @@ import TransHistBox from './components/TransHistBox.jsx';
 import PeopleBox from './components/PeopleBox.jsx';
 import ProfileBox from './components/ProfileBox.jsx';
 
-
-
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -61,7 +58,6 @@ class App extends React.Component {
         console.log(data.data);
       });
   }
-
 
   getAllUsers() {
     axios.get('/api/user/getAllUsers')
@@ -134,9 +130,9 @@ class App extends React.Component {
   getOneNode() {
     axios.post('/api/node/getOneNode', this.state.selectedFromUser)
       .then((data) => {
-        // console.log(data.data);
-        return data.data.nodes;
-      })
+        console.log(data.data);
+        // return data.data.nodes;
+      });
   }
 
   createNode(nickname) {
@@ -147,8 +143,6 @@ class App extends React.Component {
     axios.post('/api/node/createNode', postData)
       .then((Users) => {
         console.log(Users.data);
-        console.log(Users.data._id);
-        console.log(Users.data._links);
         // return Users.data;
       });
   }
