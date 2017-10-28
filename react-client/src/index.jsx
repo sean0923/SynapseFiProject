@@ -42,7 +42,6 @@ class App extends React.Component {
     return (
       <Router>
         <div>
-          
           <div id="header"> <h1>Easy Pay with SynapseFi</h1> </div>
           {/* <Home/>  */}
           <Switch>
