@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "postinstall": "webpack --config webpack.dev.config.babel.js",
+    "heroku-postbuild": "webpack -d",
     "build": "webpack -d --watch",
     "start": "nodemon server/index.js"
   },
