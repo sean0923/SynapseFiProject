@@ -8,5 +8,8 @@ Paying Application using SynapseFI API
 4. Click Pay button
 5. Check your transaction history.
 
+### Deployed Website
+Available at https://sean-synapsefi-project.herokuapp.com/
+
 ### Video Demo
 Available at https://www.youtube.com/watch?v=NHQh8eq4L8o&feature=youtu.be
