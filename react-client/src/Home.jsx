@@ -1,23 +1,11 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import axios from 'axios';
+import { Button, Loader, Form, Segment, Icon } from 'semantic-ui-react';
 
-import ThemingLayout from './components/ThemingLayout.jsx';
-import Buttons from './components/Buttons.jsx';
-import TableOfUsers from './components/TableOfUsers.jsx';
-import DropDownEx from './components/DropDownEx.jsx'
-import NodeDropDownEx from './components/NodeDropDownEx.jsx'
-import FormEx from './components/FormEx.jsx';
-import NodeForm from './components/NodeForm.jsx';
+import DropDownEx from './components/DropDownEx.jsx';
+import NodeDropDownEx from './components/NodeDropDownEx.jsx';
 import TableEx from './components/TableEx.jsx';
 
-import { Button, Menu, Loader, Form, Segment, Icon } from 'semantic-ui-react';
-
-// import { Loader } from 'semantic-ui-react'
-
-// import ReactRouter from 'react-router-dom';
-// const Router = ReactRouter.BrowserRouter;
-// const Route = ReactRouter.Route;
 
 
 class App extends React.Component {
