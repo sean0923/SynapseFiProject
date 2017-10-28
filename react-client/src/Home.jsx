@@ -6,6 +6,7 @@ import UserDropDown from './components/UserDropDown.jsx';
 import NodeDropDown from './components/NodeDropDown.jsx';
 import TransHistoryTable from './components/TransHistoryTable.jsx';
 import People from './components/People.jsx';
+import ProfileBox from './components/ProfileBox.jsx';
 
 
 
@@ -323,7 +324,11 @@ class App extends React.Component {
             </div>
           </div>
 
-          {profileBox}
+          {/* {profileBox} */}
+          <ProfileBox
+            nodeDropDownFromOptions={this.state.nodeDropDownFromOptions}
+            justCreatedUser={this.props.justCreatedUse}
+          />
 
           <People usersDropDownOption={this.state.usersDropDownOption} />
         </div>
