@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table } from 'semantic-ui-react';
 
-const TableEx = ({ transactionHistory }) => (
+const TransHistoryTable = ({ transactionHistory }) => (
   <Table celled selectable>
     <Table.Header>
       <Table.Row>
@@ -27,4 +27,4 @@ const TableEx = ({ transactionHistory }) => (
   </Table>
 );
 
-export default TableEx;
+export default TransHistoryTable;

@@ -4,7 +4,7 @@ import { Button, Loader, Form, Segment, Icon } from 'semantic-ui-react';
 
 import UserDropDown from './components/UserDropDown.jsx';
 import NodeDropDown from './components/NodeDropDown.jsx';
-import TableEx from './components/TableEx.jsx';
+import TransHistoryTable from './components/TransHistoryTable.jsx';
 
 
 
@@ -320,7 +320,7 @@ class App extends React.Component {
           <div className="history">
             <h2>History: </h2>
             <div style={{ margin: 0 }} className="tableBox">
-              <TableEx transactionHistory={this.state.transactionHistory} />
+              <TransHistoryTable transactionHistory={this.state.transactionHistory} />
             </div>
           </div>
 
