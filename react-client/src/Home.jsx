@@ -5,6 +5,8 @@ import { Button, Loader, Form, Segment, Icon } from 'semantic-ui-react';
 import UserDropDown from './components/UserDropDown.jsx';
 import NodeDropDown from './components/NodeDropDown.jsx';
 import TransHistoryTable from './components/TransHistoryTable.jsx';
+import People from './components/People.jsx';
+
 
 
 
@@ -323,17 +325,7 @@ class App extends React.Component {
 
           {profileBox}
 
-          <div className="people">
-            <h2>Users:</h2>
-            {this.state.usersDropDownOption.map((user, idx) => {
-              return (
-                <div key={idx} className="profileSmallBox">
-                  <Icon name="user" />
-                  {user.text}
-                </div>
-              );
-            })}
-          </div>
+          <People usersDropDownOption={this.state.usersDropDownOption} />
         </div>
       </div>
     );
