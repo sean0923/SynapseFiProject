@@ -1,17 +1,9 @@
 const express = require('express');
-
 const router = express.Router();
 
 const SynapsePay = require('synapsepay');
-
 const Nodes = SynapsePay.Nodes;
 
-const synapseFiBase = require('../synapseFiBase');
-const keys = require('../../config/keys');
-
-const Helpers = synapseFiBase.Helpers;
-const client = synapseFiBase.client;
-const Users = synapseFiBase.Users;
 
 router.post('/createNode', (req, res) => {
   const synapseNodePayload = {

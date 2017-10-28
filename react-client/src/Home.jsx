@@ -40,15 +40,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.getAllUsers();
-    // let selectedUserId = this.props.justCreatedUser.json._id
-    // console.log('componenet did mount', selectedUserId);
-    // axios.post('/api/user/getUser', { selectedUserId })
-    //   .then((user) => {
-    //     this.setState({ selectedFromUser: user.data }, () => {
-    //       this.getAllNodes('from');
-    //     });
-    //   });
-  }
+  };
 
   componentWillReceiveProps(nextProps) {
     let selectedUserId = nextProps.justCreatedUser.json._id
@@ -64,10 +56,8 @@ class App extends React.Component {
     axios.post('/api/user/getUser', this.state.selectedFromUser)
       .then((data) => {
         console.log(data.data);
-        // return Users.data;
       });
   }
-
 
 
   getAllUsers() {
@@ -150,7 +140,7 @@ class App extends React.Component {
     let postData = {
       user: this.state.justCreatedUser,
       nickname
-    }
+    };
     axios.post('/api/node/createNode', postData)
       .then((Users) => {
         console.log(Users.data);
@@ -223,7 +213,10 @@ class App extends React.Component {
           amount: transactionData.amount.amount,
         };
         let transactionHistory = this.state.transactionHistory.concat(historyData);
-        this.setState({ transactionHistory });
+        this.setState({
+          transactionHistory,
+          amount: '',
+        });
       })
       .then(() => {
         this.getAllTransactions();
@@ -302,14 +295,18 @@ class App extends React.Component {
               />
             </div>
             <div className="amount">
-              <Form.Input
-                fluid
-                icon="dollar"
-                iconPosition="left"
-                onChange={this.handleAmountChange}
-                value={this.state.amount}
-                placeholder="Amount"
-              />
+              <Form>
+                <Form.Field required>
+                  <Form.Input
+                    fluid
+                    icon="dollar"
+                    iconPosition="left"
+                    onChange={this.handleAmountChange}
+                    value={this.state.amount}
+                    placeholder="Amount"
+                  />
+                </Form.Field>
+              </Form>
             </div>
             <div className="payBtn">
               <Button onClick={this.createTransaction} color="teal" fluid size="large">
